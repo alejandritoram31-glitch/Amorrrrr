@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para mi Amor ❤️</title>
+    <style>
+        :root {
+            --color-sobre: #ef5350;
+            --color-sobre-oscuro: #d32f2f;
+            --color-papel: #ffffff;
+            --color-texto: #333;
+        }
+
+        body { 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            background-color: #ffebee; 
+            margin: 0; 
+            font-family: 'Georgia', serif; 
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Lluvia de corazones de fondo */
+        .decor {
+            position: absolute;
+            top: -20px;
+            font-size: 20px;
+            user-select: none;
+            z-index: -1;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            to { transform: translateY(110vh) rotate(360deg); }
+        }
+
+        .container { 
+            text-align: center; 
+            width: 100%; 
+            z-index: 10;
+            transition: transform 0.6s ease;
+        }
+
+        /* Baja el contenedor al abrir para que la carta no se salga de la pantalla */
+        .container.open-state {
+            transform: translateY(100px);
+        }
+
+        .envelope-wrapper { 
+            background: var(--color-sobre); 
+            height: 180px; 
+            width: 280px; 
+            position: relative; 
+            margin: 0 auto; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15); 
+        }
+
+        .envelope::before { 
+            content: ""; 
+            position: absolute; 
+            top: 0; left: 0; z-index: 4; 
+            border-top: 100px solid var(--color-sobre); 
+            border-left: 140px solid transparent; 
+            border-right: 140px solid transparent; 
+            transform-origin: top; 
+            transition: all 0.6s ease; 
+        }
+
+        .envelope::after { 
+            content: ""; 
+            position: absolute; bottom: 0; left: 0; z-index: 3; 
+            border-bottom: 90px solid var(--color-sobre-oscuro); 
+            border-left: 140px solid #ff8a80; 
+            border-right: 140px solid #ff8a80; 
+        }
+
+        .letter { 
+            position: absolute; 
+            bottom: 5px; left: 5%; 
+            width: 90%; height: 90%; 
+            background: var(--color-papel); 
+            z-index: 2; 
+            transition: all 0.7s ease; 
+            padding: 20px 15px; 
+            box-sizing: border-box; 
+            box-shadow: 0 0 10px rgba(0,0,0,0.1); 
+            overflow-y: auto; 
+            text-align: left;
+        }
+
+        .text { 
+            font-size: 13px; 
+            color: var(--color-texto); 
+            line-height: 1.6; 
+            white-space: pre-line;
+        }
+
+        /* Estados activos */
+        .active .envelope::before { transform: rotateX(180deg); z-index: 1; }
+        .active .letter { 
+            transform: translateY(-240px); /* Sube la carta */
+            height: 320px; 
+            z-index: 5; 
+        }
+
+        button { 
+            margin-top: 40px;
+            padding: 12px 25px; 
+            background: #d32f2f; 
+            color: white; 
+            border: none; 
+            border-radius: 50px; 
+            cursor: pointer; 
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .letter::-webkit-scrollbar { width: 3px; }
+        .letter::-webkit-scrollbar-thumb { background: #ffcdd2; }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="mainContainer">
+        <div class="envelope-wrapper" id="envelope">
+            <div class="envelope">
+                <div class="letter">
+                    <div class="text">
+Sé que la vida a veces se viste de incertidumbre, que el corazón se cansa y se resiente, y que nuestros pensamientos pueden jugar con la culpa. Pero entre todo eso, hay una verdad que permanece inquebrantable: solo quiero estar contigo.
+
+A tu lado siento la calma que calma mis tempestades, la seguridad que me da fuerza, y una alegría profunda que ninguna palabra alcanza a describir. Eres el amor que siempre soñé, la mujer con la que quiero caminar todos mis días, la dueña de mi futuro y de mis sueños más sinceros.
+
+Hoy comienza un capítulo nuevo, una etapa donde cada gesto será para ti, donde cada beso, cada abrazo y cada caricia serán semillas que florezcan en nuestro amor. Quiero reconquistar cada rincón de ti, ganarme tu risa, tu mirada y tu alma, y dejar mi esencia tatuada en tu corazón, así como tú vives ya grabada en el mío.
+
+Te amo con la certeza de quien ha encontrado su hogar en el latido de otro corazón, y prometo recorrer contigo este camino, cuidando cada instante, valorando cada suspiro, y amándote más allá de lo que las palabras pueden alcanzar.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button onclick="toggleLetter()" id="btn">Abrir para ti 💌</button>
+    </div>
+
+    <script>
+        function toggleLetter() {
+            const env = document.getElementById('envelope');
+            const container = document.getElementById('mainContainer');
+            const btn = document.getElementById('btn');
+            
+            env.classList.toggle('active');
+            container.classList.toggle('open-state');
+            
+            btn.innerText = env.classList.contains('active') ? 'Cerrar carta' : 'Abrir para ti 💌';
+        }
+
+        // Crear corazones y pétalos de fondo
+        function createDecor() {
+            const items = ['❤️', '🌸', '✨', '💖', '🌹'];
+            const decor = document.createElement('div');
+            decor.classList.add('decor');
+            decor.innerText = items[Math.floor(Math.random() * items.length)];
+            decor.style.left = Math.random() * 100 + 'vw';
+            decor.style.animationDuration = Math.random() * 3 + 2 + 's';
+            decor.style.opacity = Math.random();
+            document.body.appendChild(decor);
+
+            setTimeout(() => { decor.remove(); }, 5000);
+        }
+
+        setInterval(createDecor, 300);
+    </script>
+</body>
+</html>
